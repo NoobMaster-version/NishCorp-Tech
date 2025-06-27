@@ -14,6 +14,7 @@ install(
   scripts/motor_controller.py
   scripts/joint_controller.py
   scripts/teleop_controller.py
+  scripts/imu_subscriber.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

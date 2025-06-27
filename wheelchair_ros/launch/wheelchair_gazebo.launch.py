@@ -1,6 +1,11 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
+# Add to imports
 import os
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, RegisterEventHandler, TimerAction
+from launch.substitutions import Command
+from launch_ros.actions import Node
+from launch.event_handlers import OnProcessStart, OnProcessExit
+from launch_ros.descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
@@ -35,7 +40,16 @@ def generate_launch_description():
         )
     )
 
+    # ROS-Gazebo Bridge for IMU
+    ign_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/imu@sensor_msgs/msg/Imu@ignition.msgs.IMU'],
+        output='screen'
+    )
+
     return LaunchDescription([
         ign_gazebo,
-        wheelchair
+        wheelchair,
+        ign_bridge
     ])
